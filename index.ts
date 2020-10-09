@@ -1,9 +1,9 @@
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { green, yellow } from "https://deno.land/std@0.53.0/fmt/colors.ts";
 import todoRouter from "./routes/todo.ts";
 import queryRouter from "./routes/db.ts";
 
-const app = new Application();
 const port: number = +(Deno.env.get("PORT") ?? "8080");
 
 const notFoundMiddleware = ({ response }: { response: any }) => {
@@ -20,6 +20,10 @@ rootRouter.get("/", ({ response }: { response: any }) => {
     message: "hello~",
   };
 });
+
+const app = new Application();
+
+app.use(oakCors()); // Enable CORS for all routes
 
 app.use(rootRouter.routes());
 app.use(rootRouter.allowedMethods());
