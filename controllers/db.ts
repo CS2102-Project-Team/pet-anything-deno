@@ -15,10 +15,11 @@ export default {
       const value = await body.value;
       const client = await dbPool.connect();
       const result = await client.query(value.query);
+      client.release();
       response.status = 200;
       response.body = {
         success: true,
-        result,
+        result: result.rows,
       };
     } else {
       response.status = 500;
