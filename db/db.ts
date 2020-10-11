@@ -10,7 +10,7 @@ const CONFIG: PgConfig | undefined = parse(CONNECTION_STRING);
 
 console.log(green('pgConfig: '), CONFIG);
 
-const POOL_CONNECTIONS = 20;
+const POOL_CONNECTIONS = 3;
 
 let dbPool: Pool | undefined;
 
