@@ -2,12 +2,10 @@
 
 A simple Deno application.
 
-<https://pet-anything-deno.herokuapp.com>
-
 ## Usage
 
 ```
-POST https://pet-anything-deno.herokuapp.com/query
+POST <URL>/query
 
 request body:
 {
