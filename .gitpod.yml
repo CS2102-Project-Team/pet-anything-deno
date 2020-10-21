@@ -1,0 +1,7 @@
+tasks:
+  - init: 'sh ./installDeno.sh && exec $SHELL'
+    command: 'deno run --allow-net --allow-env index.ts'
+
+vscode:
+  extensions:
+    - denoland.vscode-deno@2.3.2:ZY0MyiQvB7XdooMOhd22/w==
