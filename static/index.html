@@ -33,17 +33,25 @@
           let sqlquery = $('textarea#sql-query').val();
           $('#results').html('');
           $('<lable></label>').text(sqlquery).appendTo('#results');
-          $.post('/query', {query: sqlquery}, function(results) {
-            $('#results').html($('#results').html() + '<table class="table"><tbody></tbody></table>');
-            results.forEach(function(result) {
-              $('<tr></tr>').html(result.map(x=>'<td>'+String(x)+'</td>').join('')).appendTo('#results table tbody');
-            });
-            $('textarea#sql-query').val('');
-          })
-            .fail(function(xhr, status, error) {
-              console.log(`Received ${xhr.status}: ${xhr.responseText}`);
+          $.ajax({
+            url: '/query',
+            type: 'POST',
+            data: JSON.stringify({query: sqlquery}),
+            contentType: "application/json",
+            dataType: 'json',
+            success: function(data) {
+              const results = data.result;
+              $('#results').html($('#results').html() + '<table class="table"><tbody></tbody></table>');
+              results.forEach(function(result) {
+                $('<tr></tr>').html(result.map(x=>'<td>'+String(x)+'</td>').join('')).appendTo('#results table tbody');
+              });
               $('textarea#sql-query').val('');
-            });
+            },
+          })
+          .fail(function(xhr, status, error) {
+            console.log(`Received ${xhr.status}: ${xhr.responseText}`);
+            $('textarea#sql-query').val('');
+          });
         });
         $('textarea#sql-query').val("SELECT * FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';");
         $('form').submit();
