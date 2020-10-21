@@ -1,4 +1,4 @@
-import { Application, Router } from "https://deno.land/x/oak/mod.ts";
+import { Application, Router, send } from "https://deno.land/x/oak/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import { green, yellow } from "https://deno.land/std@0.53.0/fmt/colors.ts";
 import todoRouter from "./routes/todo.ts";
@@ -15,10 +15,12 @@ const notFoundMiddleware = ({ response }: { response: any }) => {
 };
 
 const rootRouter = new Router();
-rootRouter.get("/", ({ response }: { response: any }) => {
-  response.body = {
-    message: "hello~",
-  };
+rootRouter.get("/", async (context) => {
+  await send(context, context.request.url.pathname, {
+    root: `${Deno.cwd()}/static`,
+    index: "index.html",
+  });
+  return;
 });
 
 const app = new Application();
