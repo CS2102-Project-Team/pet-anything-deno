@@ -1,6 +1,6 @@
 tasks:
   - init: 'sh ./installDeno.sh && exec $SHELL'
-    command: 'deno run --allow-net --allow-env index.ts'
+    command: './run.sh'
 
 vscode:
   extensions:
